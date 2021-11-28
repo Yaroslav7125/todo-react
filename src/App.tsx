@@ -1,25 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import {TodoList} from './components/TodoList'
 
-function App() {
+export interface Todo {
+  name: string;
+  completed: boolean;
+  id: number;
+  changing: boolean,
+}
+
+function App(): JSX.Element {
+
+    function onDelete(id: number){
+        setTodos(prevTodos => prevTodos.filter((prevTodo) => {
+            return prevTodo.id !== id;
+        }));
+    };
+
+
+
+  const [todos, setTodos] = useState<Todo[]> ([
+    { id: 1, name: 'todo1', completed: false, changing: false },
+    { id: 2, name: 'todo2', completed: false, changing: false },
+    { id: 3, name: 'todo3', completed: false, changing: false },
+  ]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div>
+        <TodoList
+            todos={ todos }
+            onDelete={ (id: number)=>onDelete(id)}
+        />
+      </div>
   );
 }
 
