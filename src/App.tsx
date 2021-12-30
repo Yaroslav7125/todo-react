@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import './App.css';
 import { TodoList } from './components/TodoList';
 import styled from 'styled-components';
@@ -19,9 +19,6 @@ function App(): JSX.Element {
         return prevTodo.id !== id;
       }),
     );
-    // eslint-disable-next-line no-console
-    console.log('delete');
-    setToLocalStorage();
   }
 
   function onChanging(id: number, newTodoName: string) {
@@ -32,17 +29,15 @@ function App(): JSX.Element {
         return prevTodo;
       }),
     );
-    setToLocalStorage();
   }
 
-  function onChangeCompleted(id: number, completed: boolean) {
-    setTodos((prevTodos) =>
+  async function onChangeCompleted(id: number, completed: boolean) {
+    await setTodos((prevTodos) =>
       prevTodos.map((prevTodo) => {
         if (prevTodo.id === id) return { ...prevTodo, completed };
         return prevTodo;
       }),
     );
-    setToLocalStorage();
   }
 
   function filterTodoList(searchWord: string, todoList: Todo[]) {
@@ -52,17 +47,13 @@ function App(): JSX.Element {
     });
   }
 
-  function addTodo(newTodo: Todo) {
-    setTodos((prevTodos) => {
+  async function addTodo(newTodo: Todo) {
+    await setTodos((prevTodos) => {
       return [...prevTodos, newTodo];
     });
     setTempValue('');
-    setToLocalStorage();
   }
 
-  function setToLocalStorage() {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }
 
   function getTodosFromLocalStorage(): Todo[] | undefined {
       // eslint-disable-next-line no-console
@@ -81,6 +72,10 @@ function App(): JSX.Element {
   const filteredTodoList = useMemo<Todo[]>(() => {
     return filterTodoList(tempValue, todos);
   }, [tempValue, todos]);
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  });
 
   return (
     <Container>
