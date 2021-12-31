@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const TheCard = styled.div`
+export const Card = styled.div`
   border: 1px solid;
   border-radius: 5px;
   padding: 10px;
@@ -9,5 +9,6 @@ export const TheCard = styled.div`
   width: 400px;
   height: 50px;
   align-items: center;
-  
 `;
+
+export default Card;

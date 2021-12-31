@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Input, Checkbox } from 'antd';
 
-import { TheCard } from './TheCard';
+import { Card } from './Card';
 
 import 'antd/dist/antd.css';
 import '../main.scss';
@@ -23,7 +23,7 @@ interface TodoItemProps extends Todo {
 export const TodoItem = (todo: TodoItemProps) => {
   const [changingTodoName, setChangingTodoName] = useState(todo.name);
   return (
-    <TheCard>
+    <Card>
       <>
         <div style={{padding: '30px'}}>
           <Checkbox
@@ -62,7 +62,7 @@ export const TodoItem = (todo: TodoItemProps) => {
           </Button>
         </FlexWrap>
       </>
-    </TheCard>
+    </Card>
   );
 };
 
